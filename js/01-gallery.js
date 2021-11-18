@@ -1,59 +1,47 @@
-import { galleryItems } from './gallery-items.js';
+import { galleryItems } from "./gallery-items.js";
 // Change code below this line
-
 
 console.log(galleryItems);
 
-const gallery = document.querySelector('.gallery');
+const gallery = document.querySelector(".gallery");
 
-const galleryAddEl = galleryItems.map(element => {
-return  `<div class="gallery__item">
-    <a class="gallery__link" href="${element.original}">
+const galleryAddEl = galleryItems
+  .map(({ original, preview, description }) => {
+    return `<div class="gallery__item">
+    <a class="gallery__link" href="${original}">
       <img
         class="gallery__image"
-        src="${element.preview}"
-        data-source="${element.original}"
-        alt="${element.description}"
+        src="${preview}"
+        data-source="${original}"
+        alt="${description}"
       />
     </a>
-    </div> `
-}).join(' ');
+    </div> `;
+  })
+  .join(" ");
 
-gallery.insertAdjacentHTML('beforeend', galleryAddEl);
+gallery.insertAdjacentHTML("beforeend", galleryAddEl);
 
-gallery.addEventListener('click', (event) => {
-event.preventDefault();
+gallery.addEventListener("click", (event) => {
+  event.preventDefault();
 
-if (event.target.nodeName !== 'IMG') {
+  if (event.target.nodeName !== "IMG") {
     return;
-}
-const imgBig = event.target.dataset.source;
-const instance = basicLightbox.create(`
+  }
+  const imgBig = event.target.dataset.source;
+  console.log('imgBig', imgBig);
+  const instance = basicLightbox.create(`
     <img src="${imgBig}">
-`)
+`);
+  instance.show();
 
-instance.show()
-
-
+  window.addEventListener("keydown", (event) => {
+    if (event.code === "Escape") {
+      instance.close();
+      window.removeEventListener("keydown", event);
+    }
+  });
 });
-
-
-console.log('gallery', gallery);
-
-
-
-
-/* <div class="gallery__item">
-  <a class="gallery__link" href="large-image.jpg">
-    <img
-      class="gallery__image"
-      src="small-image.jpg"
-      data-source="large-image.jpg"
-      alt="Image description"
-    />
-  </a>
-</div> */
-
 
 
 
