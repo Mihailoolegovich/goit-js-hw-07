@@ -29,7 +29,7 @@ gallery.addEventListener("click", (event) => {
     return;
   }
   const imgBig = event.target.dataset.source;
-  console.log('imgBig', imgBig);
+  
   const instance = basicLightbox.create(`
     <img src="${imgBig}">
 `);
@@ -38,7 +38,7 @@ gallery.addEventListener("click", (event) => {
   window.addEventListener("keydown", (event) => {
     if (event.code === "Escape") {
       instance.close();
-      window.removeEventListener("keydown", event);
+      // window.removeEventListener("keydown", event);
     }
   });
 });
